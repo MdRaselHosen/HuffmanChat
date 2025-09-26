@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Huffman Chat Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #89f7fe, #66a6ff);
+            padding: 20px;
+            color: #333;
+        }
+        h2 {
+            text-align: center;
+            color: white;
+            margin-bottom: 20px;
+        }
+        .form-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        form input[type="text"] {
+            width: 350px;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: 2px solid #007bff;
+            outline: none;
+            margin-right: 10px;
+        }
+        form input[type="submit"] {
+            padding: 12px 20px;
+            font-size: 16px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        form input[type="submit"]:hover {
+            background: #0056b3;
+        }
+        .reset-btn {
+            padding: 12px 20px;
+            font-size: 16px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: 0.3s;
+        }
+        .reset-btn:hover {
+            background: #b02a37;
+        }
+        .chat-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        .chat-box {
+            background: white;
+            width: 45%;
+            padding: 20px;
+            height: 450px;
+            overflow-y: auto;
+            border-radius: 15px;
+            box-shadow: 0px 4px 15px rgba(0,0,0,0.2);
+        }
+        .chat-box h4 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #007bff;
+        }
+        .message {
+            padding: 10px 15px;
+            margin: 8px 0;
+            border-radius: 15px;
+            max-width: 90%;
+            font-size: 16px;
+            word-wrap: break-word;
+        }
+        .sender {
+            background: #dcf8c6;
+            margin-right: auto;
+        }
+        .receiver {
+            background: #e3f2fd;
+            margin-left: auto;
+        }
+        .size-detail {
+            font-size: 0.9em;
+            color: #444;
+            margin-top: 4px;
+            background: rgba(255,255,255,0.8);
+            padding: 5px 10px;
+            border-radius: 8px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <h2>💬 Huffman Chat Compression Demo</h2>
+
+    <!-- ✅ Message Form -->
+    <div class="form-container">
+        <form method="post" style="display:inline-block;">
+            {% csrf_token %}
+            <input type="text" name="message" placeholder="Type a message..." required>
+            <input type="submit" value="Send">
+        </form>
+
+        <!-- ✅ Reset Form -->
+        <form method="post" style="display:inline-block;">
+            {% csrf_token %}
+            <input type="hidden" name="reset" value="1">
+            <input type="submit" value="Reset All" class="reset-btn">
+        </form>
+    </div>
+
+    <!-- ✅ Chat Boxes -->
+    <div class="chat-container">
+        <!-- Sender Side -->
+        <div class="chat-box">
+            <h4>📤 Sender Messages</h4>
+            {% for msg in chat_history %}
+                <div class="message sender">
+                    {{ msg.original }}
+                </div>
+            {% empty %}
+                <p style="color:#999; text-align:center;">No messages yet</p>
+            {% endfor %}
+        </div>
+
+        <!-- Receiver Side -->
+        <div class="chat-box">
+            <h4>📥 Receiver (Decoded + Size Info)</h4>
+            {% for msg in chat_history %}
+                <div class="message receiver">
+                    {{ msg.decoded }}
+                    <br>
+                    <div class="size-detail">
+                        Original Size: {{ msg.original_size }} bits 
+                        Compressed Size: {{ msg.compressed_size }} bits
+                    </div>
+                </div>
+            {% empty %}
+                <p style="color:#999; text-align:center;">Waiting for messages...</p>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
