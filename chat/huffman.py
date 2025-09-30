@@ -55,3 +55,18 @@ def huffman_decode(encoded_text, codes):
             decoded_text += reverse_map[buffer]
             buffer = ""
     return decoded_text
+
+
+
+text = "Hello, This is Md. Rasel Hosen"
+
+encoded_text,codes,original_size,compressed_size = huffman_encode(text)
+print(encoded_text)
+print("------------------------------------")
+print(codes)
+print("------------------------------------")
+print("original size is" ,original_size, "compressed size is ", compressed_size)
+print("------------------------------------")
+
+decode = huffman_decode(encoded_text, codes)
+print(decode)

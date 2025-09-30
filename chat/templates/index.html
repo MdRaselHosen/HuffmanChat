@@ -104,7 +104,6 @@
 <body>
     <h2>💬 Huffman Chat Compression Demo</h2>
 
-    <!-- ✅ Message Form -->
     <div class="form-container">
         <form method="post" style="display:inline-block;">
             {% csrf_token %}
@@ -112,7 +111,7 @@
             <input type="submit" value="Send">
         </form>
 
-        <!-- ✅ Reset Form -->
+        
         <form method="post" style="display:inline-block;">
             {% csrf_token %}
             <input type="hidden" name="reset" value="1">
@@ -120,9 +119,9 @@
         </form>
     </div>
 
-    <!-- ✅ Chat Boxes -->
+    
     <div class="chat-container">
-        <!-- Sender Side -->
+        
         <div class="chat-box">
             <h4>📤 Sender Messages</h4>
             {% for msg in chat_history %}
@@ -134,7 +133,7 @@
             {% endfor %}
         </div>
 
-        <!-- Receiver Side -->
+        
         <div class="chat-box">
             <h4>📥 Receiver (Decoded + Size Info)</h4>
             {% for msg in chat_history %}
